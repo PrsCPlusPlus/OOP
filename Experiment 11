@@ -1,5 +1,5 @@
 /* 
- 22070123094
+ 22070123087
 Exp_11
 Find the volume of cube*/
 #include<iostream>
@@ -24,7 +24,7 @@ Volume:30
 */
 
 /* 
- 22070123094
+ 22070123087
 Exp_11
 Write a function to display output*/
 #include<iostream>
@@ -48,7 +48,7 @@ volume of cuboid =105
 */
 
 /* 
- 22070123094
+ 22070123087
 Exp_11
 Take input from user
 */
@@ -80,7 +80,7 @@ Volume of cuboid=125
 */
 
 /* 
- 22070123094
+ 22070123087
 Exp_11
 shapes_vol_class*/
 #include<iostream>
@@ -170,158 +170,175 @@ Volume of the sphere is = 33.4096
 
 
 /* 
- 22070123094
+ 22070123087
 Exp-11
 Write the program using class which will display the given Date,Month,Year*/
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
-
-class Date
-{
-    private :
-    const char* mon_name[12] = {"January","February","March","April","May","June","July","August","September","October","November","December"};
-    public :
-    int date;
-    int month;
-    int year;
-
-    input(int d,int m,int y)
-    {
-        date = d;
-        month = m;
-        year = y;
-    }
-
-    display()
-    {
-        cout<< "The date is :" << date << "th " << mon_name[month-1] << " 20" << year;
-    }
-
-    bool isleap()
-    {
-
-    }
-
+class Date{
+	string  v[14] = {"Mon" , "Tues" , "Wed" , "Thurs" , "Fri" , "Sat" , "Sun" , "Mon" , "Tues" , "Wed" , "Thurs" , "Fri" , "Sat"  , "Sun"};
+	int day_month[12] = {31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31};
+	string months[12] = {"Jan" , "Feb" , "March" , "April" , "May" , "June" , "July" , "Aug" , "sept" , "Oct" , "Nov" , "Dec"};
+	int day , month , year;
+	public:
+		Date()
+		{
+			cout<<"ENTER DATE : ";
+			cin>>day;
+			cout<<"ENTER MONTH : ";
+			cin>>month;
+			cout<<"ENTER YEAR : ";
+			cin>>year;
+		}
+		bool is_1_leap(int dd , int mm , int yy)
+		{
+			
+			if(yy%100 != 0 && yy % 4 == 0 || yy % 400 == 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		bool is_leap()
+		{
+			
+			if(year%100 != 0 && year % 4 == 0 || year % 400 == 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		void display_month()
+		{
+			cout<<months[month-1]<<endl;
+		}
+		int day_of_year()
+		{
+			if(is_leap())
+			{
+				int t = 366;
+//				cout<<"TOTAL DAYS ARE "<<t<<endl;
+				day_month[1] = 29;
+				int d = 0;
+				for(int i = 0  ; i <= month - 2 ; ++i)
+				{
+					d = d + day_month[i];
+				}
+				d+= day;
+				return (d - 1);
+			}
+			else
+			{
+				int t1 = 365;
+//				cout<<"TOTAL DAYS ARE: "<<t1<<endl;
+				day_month[1] = 28; 
+//				day_month[1] = 29;
+				int d = 0;
+				for(int i = 0  ; i <= month - 2 ; ++i)
+				{
+					d = d + day_month[i];
+				}
+				d+= day;
+				return (d - 1);
+			}
+		}
+		void display_weekday()
+		{
+			string day_1;
+			cout<<"ENTER THE FIRST DAY OF THE YEAR : ";
+			cin>>day_1;
+			int index;
+			for(int i = 0 ; i < 14 ; ++i)
+			{
+				if(v[i] == day_1)
+				{
+					index = i;
+					break;
+				}
+			}
+			int day = day_of_year();
+			int rem = day % 7;
+			cout<<"THE DAY IS : "<<endl;
+			if(rem == 0)
+			{
+				if(index!=0)cout<<v[index-1]<<endl;
+				else(cout<<v[12])<<endl;
+			}
+			else
+			{
+				cout<<v[index + rem]<<endl;
+			}
+		}
+		int day_of_1_year(int dd , int mm , int yy)
+		{
+			if(is_1_leap(dd , mm , yy))
+			{
+				int t = 366;
+//				cout<<"TOTAL DAYS ARE "<<t<<endl;
+				day_month[1] = 29;
+				int d = 0;
+				for(int i = 0  ; i <= mm - 2 ; ++i)
+				{
+					d = d + day_month[i];
+				}
+				d+= day;
+				return (d - 1);
+			}
+			else
+			{
+				int t1 = 365;
+//				cout<<"TOTAL DAYS ARE: "<<t1<<endl;
+				day_month[1] = 28; 
+//				day_month[1] = 29;
+				int d = 0;
+				for(int i = 0  ; i <= mm - 2 ; ++i)
+				{
+					d = d + day_month[i];
+				}
+				d+= day;
+				return (d - 1);
+			}
+		}
+		void display_age()
+		{
+			int yy , dd , mm;
+			cout<<"ENTER THE BIRTH YEAR : ";
+			cin>>yy;
+			int years = abs(yy - year);
+			cout<<"ENTER THE MONTH : ";
+			cin>>mm;
+			int mont = abs(month - mm);
+			cout<<"ENTER THE DAY : ";
+			cin>>dd;
+			int day = day_of_year();
+			cout<<"YEARS IS "<<years<<endl;
+			cout<<"MONTHS IS : "<<mont<<endl;
+			int bday = day_of_1_year(dd , mm , yy);
+			cout<<"DAYS IS : "<<abs(bday - day);
+		}
 };
-
 int main()
 {
-    Date d1;
-    int d,m,y;
-    cout << "Enter the date :";
-    cin >> d;
-    cout << "Enter the month :";
-    cin >> m;
-    cout << "Enter the year :";
-    cin >> y;
-    d1.input(d,m,y);
-    d1.display();
-
-    return 0;
-}
-/*Output
-Enter the date :2
-Enter the month :8
-Enter the year :23
-The date is :2th August 2023
-*/
-
-/* 
- 22070123094
-EXP-11*/
-#include<iostream>
-using namespace std;
-class Date {
-
-
-private:
-    string month_names[12] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    // int days_in_month[12];
-    
-    void day_in_month(int days_in_month[12]){
-        // month_index = month
-        int month_needed;
-        if (is_leap() == 1)
-        {
-            days_in_month[1] = 29;
-        }
-    }
-    
-    string week_day_names[7] = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
-public:
-    int date;
-    int month;
-    int year;
-    string first_day;
-    bool is_leap(){
-       
-        if (year % 400 == 0) {
-            return true;
-        }
-
-        else if (year % 100 == 0) {
-            return false;
-        }
-        else if (year % 4 == 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    void disp_month()
-    {
-        cout << "The current month is: " << month_names[month - 2] << endl;
-    }
-
-    void weekday(){
-        int days_in_month[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        day_in_month(days_in_month);
-        int week_index = 0;
-        for (int i = 0; i < 7; i++)
-        {
-            if (first_day == week_day_names[i])
-            {
-                week_index = i;
-            }
-            
-        }
-        int no_days = 0;
-        for (int i = 0; i < month-1; i++)
-        {
-            no_days = no_days +days_in_month[i];
-        }
-        no_days = no_days + date;
-        int week = no_days%7;
-        week = week + week_index;
-        if (week >= 7)
-        {
-            week = week - 7;
-        }
-        string weekday_name = week_day_names[week-2];
-        cout <<"The current week is: "<< weekday_name;
-
-
-    }
-
-};
-int main()
-{
-    Date d1;
-    cout << "Enter Date: ";
-    cin >> d1.date;
-    cout << "Enter Month: ";
-    cin >> d1.month;
-    cout << "Enter Year: ";
-    cin >> d1.year;
-    cout << "Enter First Day of The Year: "<< endl;
-    cin >> d1.first_day;
-    d1.disp_month();
-    // cout << d1.is_leap();
-    d1.weekday();
-    return 0;
-
+	Date d1;
+	if(d1.is_leap())
+	{
+		cout<<"LEAP YEAR"<<endl;
+	}
+	else
+	{
+		cout<<"NOT LEAP YEAR"<<endl;
+	}
+	d1.display_month();
+	cout<<d1.day_of_year()<<endl;
+	d1.display_weekday();
+	d1.display_age();
+	return 0;
 }
 /*OUTPUT
 Enter Date: 31
